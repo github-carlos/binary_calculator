@@ -1,3 +1,4 @@
+import 'package:binary_calculator/pages/home/widgets/binaryNumberSelector.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,10 @@ class _HomePageState extends State<HomePage> {
                   )
                 ),
               ),
-            )
+            ),
+            BinaryNumberSelector(initBinaryNumber: '00000000', onNumberChange: (String binaryNumber) {
+              print('first binary number $binaryNumber');
+            },),
           ],
         ),
       ),
