@@ -6,6 +6,7 @@ enum BinaryCalculatorOperation {
   module
 }
 
+// print('binario em decimal ${int.parse(initBinaryNumber, radix=2)}')
 class BinaryCalculator {
   static String calculate(BinaryCalculatorOperation operator, String firstBinaryNumber, String secondBinaryNumber) {
     print('Doing binary calculations');

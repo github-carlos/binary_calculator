@@ -1,3 +1,4 @@
+import 'package:binary_calculator/pages/home/widgets/arrowButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -6,6 +7,7 @@ class BinaryNumberSelector extends StatefulWidget {
   final Function onNumberChange;
   BinaryNumberSelector(
       {@required this.initBinaryNumber, @required this.onNumberChange}) {
+
     _validateInitialNumber();
   }
 
@@ -31,17 +33,20 @@ class _BinaryNumberSelectorState extends State<BinaryNumberSelector> {
     splitedStringNumber = widget.initBinaryNumber.split('');
   }
 
-  List<Number> buildNumbersWidgets() {
-   List<Number> numbersWidgets = [];
+  List<Widget> buildNumbersWidgets() {
+   List<Widget> numbersWidgets = [];
 
    splitedStringNumber.asMap().forEach((int index, String number) {
-     numbersWidgets.add(Number(
-       number: number,
-       onNumberChange: (newNumber) {
-         splitedStringNumber[index] = newNumber;
-         final newBinaryNumber = splitedStringNumber.join('');
-         widget.onNumberChange(newBinaryNumber);
-       },
+     numbersWidgets.add(Padding(
+       padding: const EdgeInsets.all(8.0),
+       child: Number(
+         number: number,
+         onNumberChange: (newNumber) {
+           splitedStringNumber[index] = newNumber;
+           final newBinaryNumber = splitedStringNumber.join('');
+           widget.onNumberChange(newBinaryNumber);
+         },
+       ),
      ));
    });
 
@@ -70,35 +75,27 @@ class _NumberState extends State<Number> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        IconButton(
-          onPressed: () {
-            setState(() {
-              widget.number = '1';
-              widget.onNumberChange('1');
-            });
-          },
-          icon: Transform.rotate(
-              angle: 3.14,
-              child: SvgPicture.asset(
-                'assets/icons/arrow.svg',
-                width: 25,
-              )),
-        ),
+        ArrowButton(onPressed: () {
+          setState(() {
+            widget.number = '1';
+            widget.onNumberChange('1');
+          });
+        }, direction: ArrowButtonDirection.up),
         Text(
           widget.number,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
-        IconButton(
-          onPressed: () {
-            setState(() {
-              widget.number = '0';
-              widget.onNumberChange('0');
-            });
-          },
-          icon: SvgPicture.asset('assets/icons/arrow.svg', width: 25),
-        ),
+        ArrowButton(onPressed: () {
+          setState(() {
+            widget.number = '0';
+            widget.onNumberChange('0');
+          });
+        }, direction: ArrowButtonDirection.down)
       ],
     );
   }
 }
+
+
