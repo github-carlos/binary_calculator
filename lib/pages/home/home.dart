@@ -1,4 +1,6 @@
 import 'package:binary_calculator/pages/home/widgets/binaryNumberSelector.dart';
+import 'package:binary_calculator/pages/home/widgets/binaryWidgetDivider.dart';
+import 'package:binary_calculator/pages/home/widgets/operationResult.dart';
 import 'package:binary_calculator/pages/home/widgets/operatorSelector.dart';
 import 'package:binary_calculator/services/binary_calculator.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String firstBinaryNumber = '00000000';
+  String secondBinaryNumber = '00000000';
+  String operationResult = '00000000';
+  BinaryCalculatorOperation operation = BinaryCalculatorOperation.sum;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +41,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
-                  child: OperatorSelector(operator: BinaryCalculatorOperation.sum, onOperationChange: (newOperator) {
+                  child: OperatorSelector(operator: operation, onOperationChange: (newOperator) {
                     print('novo operador $newOperator');
                   }),
                 ),
@@ -44,19 +50,16 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      BinaryNumberSelector(initBinaryNumber: '00000000', onNumberChange: (String binaryNumber) {
+                      BinaryNumberSelector(initBinaryNumber: firstBinaryNumber, onNumberChange: (String binaryNumber) {
                         print('first binary number $binaryNumber');
                       },),
-                      BinaryNumberSelector(initBinaryNumber: '00000000', onNumberChange: (String binaryNumber) {
+                      BinaryNumberSelector(initBinaryNumber: secondBinaryNumber, onNumberChange: (String binaryNumber) {
                         print('second binary number $binaryNumber');
                       },),
-                      Container(
-                        margin: EdgeInsets.only(right: 30),
-                        height: 2,
-                        color: Colors.black,
-                      ),
-                      Text('Resposta')
+                      BinaryWidgetDivider(),
+                      OperationResult(number: operationResult)
                    ]
                   ),
                 )
@@ -68,3 +71,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+

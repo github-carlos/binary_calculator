@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:binary_calculator/services/binary_calculator.dart';
 
 class OperatorSelector extends StatefulWidget {
-  final BinaryCalculatorOperation operator;
+  BinaryCalculatorOperation operator;
   final Function onOperationChange;
   OperatorSelector({@required this.operator, @required this.onOperationChange});
   @override
@@ -23,13 +23,40 @@ class _OperatorSelectorState extends State<OperatorSelector> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ArrowButton(onPressed: () {}, direction: ArrowButtonDirection.up,),
+        ArrowButton(onPressed: () {
+          changeToPreviousOperator();
+        }, direction: ArrowButtonDirection.up,),
         Text(
           operatorsLabel[widget.operator],
           style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
         ),
-        ArrowButton(onPressed: () {}, direction: ArrowButtonDirection.down,),
+        ArrowButton(onPressed: () {
+          changeToNextOperator();
+        }, direction: ArrowButtonDirection.down,),
       ],
     );
+  }
+
+  get listOfOperators {
+   return  operatorsLabel.keys.toList();
+  }
+
+  changeToPreviousOperator() {
+    final indexOfCurrentOperator = listOfOperators.indexOf(widget.operator);
+    if (indexOfCurrentOperator != 0)  {
+      setState(() {
+        widget.operator = listOfOperators[indexOfCurrentOperator - 1];
+        widget.onOperationChange(widget.operator);
+      });
+    }
+  }
+  changeToNextOperator() {
+    final indexOfCurrentOperator = listOfOperators.indexOf(widget.operator);
+    if (indexOfCurrentOperator < listOfOperators.length - 1) {
+      setState(() {
+        widget.operator = listOfOperators[indexOfCurrentOperator + 1];
+        widget.onOperationChange(widget.operator);
+      });
+    }
   }
 }

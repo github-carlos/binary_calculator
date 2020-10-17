@@ -38,7 +38,7 @@ class _BinaryNumberSelectorState extends State<BinaryNumberSelector> {
 
    splitedStringNumber.asMap().forEach((int index, String number) {
      numbersWidgets.add(Padding(
-       padding: const EdgeInsets.all(8.0),
+       padding: const EdgeInsets.only(right: 2.0),
        child: Number(
          number: number,
          onNumberChange: (newNumber) {
@@ -56,6 +56,7 @@ class _BinaryNumberSelectorState extends State<BinaryNumberSelector> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: buildNumbersWidgets(),
     );
   }
