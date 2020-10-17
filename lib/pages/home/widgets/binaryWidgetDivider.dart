@@ -8,7 +8,7 @@ class BinaryWidgetDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 2,
-      color: Colors.black,
+      color: Colors.white,
     );
   }
 }

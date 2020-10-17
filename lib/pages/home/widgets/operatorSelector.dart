@@ -31,7 +31,7 @@ class _OperatorSelectorState extends State<OperatorSelector> {
         }, direction: ArrowButtonDirection.up, active: upArrowIsActivated,),
         Text(
           operatorsLabel[widget.operator],
-          style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         ArrowButton(onPressed: () {
           changeToNextOperator();

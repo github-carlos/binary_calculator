@@ -7,7 +7,7 @@ class OperationResult extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: number.split('').map((digit) {
-        return Text(digit, style: TextStyle(fontSize: 40), textAlign: TextAlign.center,);
+        return Text(digit, style: TextStyle(fontSize: 40, color: Colors.white), textAlign: TextAlign.center,);
       }).toList()
     );
   }

@@ -23,8 +23,8 @@ class ArrowButton extends StatelessWidget {
           child: SvgPicture.asset(
             'assets/icons/arrow.svg',
             width: 25,
-            color: active ? Colors.black : Colors.grey,
-          )) : SvgPicture.asset('assets/icons/arrow.svg', width: 25, color: active ? Colors.black : Colors.grey,),
+            color: active ? Colors.green : Colors.white38,
+          )) : SvgPicture.asset('assets/icons/arrow.svg', width: 25, color: active ? Colors.green : Colors.white38,),
     );
   }
 }

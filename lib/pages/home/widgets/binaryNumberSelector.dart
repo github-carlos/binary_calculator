@@ -86,7 +86,7 @@ class _NumberState extends State<Number> {
         }, direction: ArrowButtonDirection.up, active: widget.number == '0',),
         Text(
           widget.number,
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         ArrowButton(onPressed: () {
           setState(() {
