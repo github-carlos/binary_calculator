@@ -42,7 +42,6 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: OperatorSelector(operator: operation, onOperationChange: (newOperator) {
-                    print('novo operador $newOperator');
                   }),
                 ),
                 SizedBox(
@@ -53,10 +52,16 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BinaryNumberSelector(initBinaryNumber: firstBinaryNumber, onNumberChange: (String binaryNumber) {
-                        print('first binary number $binaryNumber');
+                        firstBinaryNumber = binaryNumber;
+                        setState(() {
+                          operationResult = BinaryCalculator.calculate(operation, firstBinaryNumber, secondBinaryNumber);
+                        });
                       },),
                       BinaryNumberSelector(initBinaryNumber: secondBinaryNumber, onNumberChange: (String binaryNumber) {
-                        print('second binary number $binaryNumber');
+                        secondBinaryNumber = binaryNumber;
+                        setState(() {
+                          operationResult = BinaryCalculator.calculate(operation, firstBinaryNumber, secondBinaryNumber);
+                        });
                       },),
                       BinaryWidgetDivider(),
                       OperationResult(number: operationResult)
