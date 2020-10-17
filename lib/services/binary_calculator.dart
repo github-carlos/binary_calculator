@@ -1,14 +1,12 @@
 import 'dart:math';
+
+import 'package:binary_calculator/services/exceptions.dart';
 enum BinaryCalculatorOperation {
   divide,
   sum,
   minus,
   multiply,
   module
-}
-
-enum BinaryCalculatorErrors {
-  DIVISION_BY_ZERO
 }
 
 // print('binario em decimal ${int.parse(initBinaryNumber, radix=2)}')
@@ -76,7 +74,7 @@ class BinaryCalculator {
 
   static int _divide(int firstNumber, int secondNumber) {
     if (secondNumber == 0) {
-      throw BinaryCalculatorErrors.DIVISION_BY_ZERO ;
+      throw DivisionByZeroError();
     }
     return firstNumber ~/ secondNumber;
   }

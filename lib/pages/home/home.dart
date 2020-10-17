@@ -4,6 +4,7 @@ import 'package:binary_calculator/pages/home/widgets/binaryWidgetDivider.dart';
 import 'package:binary_calculator/pages/home/widgets/operationResult.dart';
 import 'package:binary_calculator/pages/home/widgets/operatorSelector.dart';
 import 'package:binary_calculator/services/binary_calculator.dart';
+import 'package:binary_calculator/services/erro_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -39,7 +40,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
-                  child: SvgPicture.asset('assets/icons/logo.svg', width: 80,),
+                  child: SvgPicture.asset(
+                    'assets/icons/logo.svg',
+                    width: 80,
+                  ),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
@@ -48,7 +52,11 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       'BINARY CALCULATOR',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: kTitleColor),
+                      style: TextStyle(
+                          fontSize: 33,
+                          fontWeight: FontWeight.bold,
+                          color: kTitleColor,
+                          fontFamily: 'Monospace'),
                     ),
                   ),
                 ),
@@ -65,11 +73,8 @@ class _HomePageState extends State<HomePage> {
                           onOperationChange: (newOperator) {
                             setState(() {
                               operation = newOperator;
+                              callBinaryCalculatorService();
                             });
-                            operationResult = BinaryCalculator.calculate(
-                                operation,
-                                firstBinaryNumber,
-                                secondBinaryNumber);
                           }),
                     ),
                     SizedBox(
@@ -84,10 +89,7 @@ class _HomePageState extends State<HomePage> {
                               onNumberChange: (String binaryNumber) {
                                 firstBinaryNumber = binaryNumber;
                                 setState(() {
-                                  operationResult = BinaryCalculator.calculate(
-                                      operation,
-                                      firstBinaryNumber,
-                                      secondBinaryNumber);
+                                  callBinaryCalculatorService();
                                 });
                               },
                             ),
@@ -99,18 +101,20 @@ class _HomePageState extends State<HomePage> {
                               onNumberChange: (String binaryNumber) {
                                 secondBinaryNumber = binaryNumber;
                                 setState(() {
-                                  operationResult = BinaryCalculator.calculate(
-                                      operation,
-                                      firstBinaryNumber,
-                                      secondBinaryNumber);
+                                  callBinaryCalculatorService();
                                 });
                               },
                             ),
                             BinaryWidgetDivider(),
                             OperationResult(number: operationResult)
                           ]),
-                    )
+                    ),
                   ],
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 3.0),
+                  child: Text('Feito por Carlos Eduardo @caeduob', style: TextStyle(color: Colors.white54, fontSize: 18),),
                 )
               ],
             ),
@@ -118,5 +122,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void callBinaryCalculatorService() {
+    try {
+      operationResult = BinaryCalculator.calculate(
+          operation, firstBinaryNumber, secondBinaryNumber);
+    } catch(error) {
+      ErrorHandler.handle(error, context);
+    }
   }
 }
