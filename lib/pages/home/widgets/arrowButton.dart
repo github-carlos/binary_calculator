@@ -9,8 +9,9 @@ enum ArrowButtonDirection {
 class ArrowButton extends StatelessWidget {
   final Function onPressed;
   final ArrowButtonDirection direction;
+  bool active = true;
 
-  ArrowButton({@required this.onPressed, @required this.direction });
+  ArrowButton({@required this.onPressed, @required this.direction, @required this.active});
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -22,7 +23,8 @@ class ArrowButton extends StatelessWidget {
           child: SvgPicture.asset(
             'assets/icons/arrow.svg',
             width: 25,
-          )) : SvgPicture.asset('assets/icons/arrow.svg', width: 25),
+            color: active ? Colors.black : Colors.grey,
+          )) : SvgPicture.asset('assets/icons/arrow.svg', width: 25, color: active ? Colors.black : Colors.grey,),
     );
   }
 }

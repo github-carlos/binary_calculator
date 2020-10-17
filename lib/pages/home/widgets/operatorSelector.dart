@@ -18,6 +18,9 @@ class _OperatorSelectorState extends State<OperatorSelector> {
     BinaryCalculatorOperation.divide: '/',
     BinaryCalculatorOperation.module: '%'
   };
+
+  bool upArrowIsActivated = false;
+  bool downArrowIsActivated = true;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,14 +28,14 @@ class _OperatorSelectorState extends State<OperatorSelector> {
       children: [
         ArrowButton(onPressed: () {
           changeToPreviousOperator();
-        }, direction: ArrowButtonDirection.up,),
+        }, direction: ArrowButtonDirection.up, active: upArrowIsActivated,),
         Text(
           operatorsLabel[widget.operator],
           style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
         ),
         ArrowButton(onPressed: () {
           changeToNextOperator();
-        }, direction: ArrowButtonDirection.down,),
+        }, direction: ArrowButtonDirection.down, active: downArrowIsActivated,),
       ],
     );
   }
@@ -43,18 +46,28 @@ class _OperatorSelectorState extends State<OperatorSelector> {
 
   changeToPreviousOperator() {
     final indexOfCurrentOperator = listOfOperators.indexOf(widget.operator);
+    final nextIndex = indexOfCurrentOperator - 1;
     if (indexOfCurrentOperator != 0)  {
       setState(() {
-        widget.operator = listOfOperators[indexOfCurrentOperator - 1];
+        if ((nextIndex - 1) == -1) {
+          upArrowIsActivated = false;
+        }
+        downArrowIsActivated = true;
+        widget.operator = listOfOperators[nextIndex];
         widget.onOperationChange(widget.operator);
       });
     }
   }
   changeToNextOperator() {
     final indexOfCurrentOperator = listOfOperators.indexOf(widget.operator);
-    if (indexOfCurrentOperator < listOfOperators.length - 1) {
+    final nextIndex = indexOfCurrentOperator + 1;
+    if (nextIndex < listOfOperators.length) {
       setState(() {
-        widget.operator = listOfOperators[indexOfCurrentOperator + 1];
+        if ((nextIndex + 1) == listOfOperators.length) {
+          downArrowIsActivated = false;
+        }
+        upArrowIsActivated = true;
+        widget.operator = listOfOperators[nextIndex];
         widget.onOperationChange(widget.operator);
       });
     }

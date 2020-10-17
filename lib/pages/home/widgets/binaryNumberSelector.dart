@@ -83,7 +83,7 @@ class _NumberState extends State<Number> {
             widget.number = '1';
             widget.onNumberChange('1');
           });
-        }, direction: ArrowButtonDirection.up),
+        }, direction: ArrowButtonDirection.up, active: widget.number == '0',),
         Text(
           widget.number,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
@@ -93,7 +93,7 @@ class _NumberState extends State<Number> {
             widget.number = '0';
             widget.onNumberChange('0');
           });
-        }, direction: ArrowButtonDirection.down)
+        }, direction: ArrowButtonDirection.down, active: widget.number == '1',)
       ],
     );
   }
