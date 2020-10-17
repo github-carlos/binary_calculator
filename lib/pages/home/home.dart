@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                  'Binary Calculator',
+                  'BINARY CALCULATOR',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 30,
@@ -42,6 +42,10 @@ class _HomePageState extends State<HomePage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: OperatorSelector(operator: operation, onOperationChange: (newOperator) {
+                    setState(() {
+                      operation = newOperator;
+                    });
+                    operationResult = BinaryCalculator.calculate(operation, firstBinaryNumber, secondBinaryNumber);
                   }),
                 ),
                 SizedBox(

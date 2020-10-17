@@ -7,26 +7,39 @@ enum BinaryCalculatorOperation {
   module
 }
 
+enum BinaryCalculatorErrors {
+  DIVISION_BY_ZERO
+}
+
 // print('binario em decimal ${int.parse(initBinaryNumber, radix=2)}')
 class BinaryCalculator {
   static String calculate(BinaryCalculatorOperation operator, String firstBinaryNumber, String secondBinaryNumber) {
 
     final firstNumberInDecimal = convertBinaryToDecimal(firstBinaryNumber);
     final secondNumberInDecimal = convertBinaryToDecimal(secondBinaryNumber);
+    int result;
     switch(operator) {
       case BinaryCalculatorOperation.sum:
-        return BinaryCalculator._sum(firstBinaryNumber, secondBinaryNumber);
+        result = BinaryCalculator._sum(firstNumberInDecimal, secondNumberInDecimal);
+        break;
       case BinaryCalculatorOperation.minus:
-        return BinaryCalculator._minus(firstBinaryNumber, secondBinaryNumber);
+        result = BinaryCalculator._minus(firstNumberInDecimal, secondNumberInDecimal);
+        break;
       case BinaryCalculatorOperation.divide:
-        return BinaryCalculator._divide(firstBinaryNumber, secondBinaryNumber);
+        result = BinaryCalculator._divide(firstNumberInDecimal, secondNumberInDecimal);
+        break;
       case BinaryCalculatorOperation.multiply:
-        return BinaryCalculator._multiply(firstBinaryNumber, secondBinaryNumber);
+        result = BinaryCalculator._multiply(firstNumberInDecimal, secondNumberInDecimal);
+        break;
       case BinaryCalculatorOperation.module:
-        return BinaryCalculator._module(firstBinaryNumber, secondBinaryNumber);
+        result = BinaryCalculator._module(firstNumberInDecimal, secondNumberInDecimal);
+        break;
       default:
         return '';
     }
+    final resultInBinary = BinaryCalculator.convertDecimalToBinary(result);
+
+    return fillResponseWithZeros(resultInBinary);
   }
   static int convertBinaryToDecimal(String binaryNumber) {
     final splitedNumber = binaryNumber.split('');
@@ -42,29 +55,45 @@ class BinaryCalculator {
     }
     return decimalValue;
   }
-
-  static String _divide(String firstBinaryNumber, String secondBinaryNumber) {
-    print('calculando divisão');
-    return '00000000';
+  static String convertDecimalToBinary(int decimal) {
+    int binaryValue = 0;
+    int i = 1;
+   while(decimal > 0) {
+      binaryValue = binaryValue + (decimal % 2)*i;
+      decimal = (decimal/2).floor();
+      i = i * 10;
+    }
+    return binaryValue.toString();
   }
 
-  static String _sum(String firstBinaryNumber, String secondBinaryNumber) {
-    print('calculando soma');
-    return '00000000';
+  static String fillResponseWithZeros(String binaryNumber) {
+    if (binaryNumber.length == 8) {
+      return binaryNumber;
+    }
+    final missingZeros = 8 - binaryNumber.length;
+    return ('0' * missingZeros) + binaryNumber;
   }
 
-  static String _minus(String firstBinaryNumber, String secondBinaryNumber) {
-    print('calculando subtração');
-    return '00000000';
+  static int _divide(int firstNumber, int secondNumber) {
+    if (secondNumber == 0) {
+      throw BinaryCalculatorErrors.DIVISION_BY_ZERO ;
+    }
+    return firstNumber ~/ secondNumber;
   }
 
-  static String _module(String firstBinaryNumber, String secondBinaryNumber) {
-    print('calculando modulo');
-    return '00000000';
+  static int _sum(int firstNumber, int secondNumber) {
+    return firstNumber + secondNumber;
   }
 
-  static String _multiply(String firstBinaryNumber, String secondBinaryNumber) {
-    print('calculando multiplicação');
-    return '00000000';
+  static int _minus(int firstNumber, int secondNumber) {
+    return firstNumber - secondNumber;
+  }
+
+  static int _module(int firstNumber, int secondNumber) {
+    return firstNumber % secondNumber;
+  }
+
+  static int _multiply(int firstNumber, int secondNumber) {
+    return firstNumber * secondNumber;
   }
 }
